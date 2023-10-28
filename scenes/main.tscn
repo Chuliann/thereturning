@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=3 uid="uid://cvjg4fraxrxow"]
+
+[ext_resource type="Texture2D" uid="uid://d2m8qf54p78pp" path="res://assets/textures/grids/Orange/texture_03.png" id="1_dai33"]
+[ext_resource type="Texture2D" uid="uid://cm5m7nr7dugjd" path="res://assets/textures/grids/Purple/texture_09.png" id="3_4pq88"]
+[ext_resource type="Texture2D" uid="uid://cnf3tk2w656pk" path="res://assets/textures/grids/Light/texture_12.png" id="3_6rh62"]
+[ext_resource type="Texture2D" uid="uid://78pehu0r5g6w" path="res://assets/textures/grids/Dark/texture_04.png" id="4_rq465"]
+[ext_resource type="PackedScene" uid="uid://0mx3suqsnm05" path="res://scenes/player.tscn" id="6_n5f7c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pfm5t"]
+albedo_texture = ExtResource("1_dai33")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_wttji"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2rcmp"]
+size = Vector3(3.29163, 4.12672, 2.92313)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dew0"]
+albedo_texture = ExtResource("3_4pq88")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f5kh7"]
+albedo_texture = ExtResource("3_6rh62")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bayom"]
+size = Vector3(100, 0.001, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_knfc4"]
+albedo_texture = ExtResource("4_rq465")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_eea2y"]
+lightmap_size_hint = Vector2i(502, 502)
+size = Vector2(100, 100)
+
+[node name="world" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="map" type="Node3D" parent="."]
+
+[node name="box1" type="StaticBody3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85279, 0.9, -3.40894)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="map/box1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+material_override = SubResource("StandardMaterial3D_pfm5t")
+mesh = SubResource("BoxMesh_wttji")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/box1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0214884, 0, 0)
+shape = SubResource("BoxShape3D_2rcmp")
+
+[node name="box2" type="StaticBody3D" parent="map"]
+transform = Transform3D(0.462492, 0, 0.886624, 0, 1, 0, -0.886624, 0, 0.462492, 2.85279, 0.6, 5.28044)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="map/box2"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -0.0421853, 0.9, 0.0220056)
+material_override = SubResource("StandardMaterial3D_6dew0")
+mesh = SubResource("BoxMesh_wttji")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/box2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0366859, 0, -0.0291357)
+shape = SubResource("BoxShape3D_2rcmp")
+
+[node name="box3" type="StaticBody3D" parent="map"]
+transform = Transform3D(0.462492, 0, 0.886624, 0, 1, 0, -0.886624, 0, 0.462492, -5.33815, 0.5, 5.44474)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="map/box3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_f5kh7")
+mesh = SubResource("BoxMesh_wttji")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/box3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0366859, 0, -0.0291357)
+shape = SubResource("BoxShape3D_2rcmp")
+
+[node name="ground" type="StaticBody3D" parent="map"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/ground"]
+shape = SubResource("BoxShape3D_bayom")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="map/ground"]
+material_override = SubResource("StandardMaterial3D_knfc4")
+mesh = SubResource("PlaneMesh_eea2y")
+
+[node name="player" parent="." instance=ExtResource("6_n5f7c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.195653, 0)
